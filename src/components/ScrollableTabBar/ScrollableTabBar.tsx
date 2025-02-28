@@ -13,7 +13,6 @@ import { constants } from '../../constants';
 import styles from './ScrollableTabBar.styles';
 import type { Tab } from 'react-native-sticky-parallax-header';
 
-const UNDERLINE_PADDING = 16;
 
 export type ScrollableTabBarProps = {
   tabs: Tab[];
@@ -42,10 +41,10 @@ class ScrollableTabBar extends React.PureComponent<ScrollableTabBarProps> {
   scrollToTab = (page: number) => {
     if (this.tabRefs[page] && this.scrollView) {
       this.tabRefs[page]?.measureLayout(
-        this.scrollView,
-        (x) => {
-          const scrollOffset = x + constants.deviceWidth * 0.15 - constants.deviceWidth / 2;
-          this.scrollView?.scrollTo({ x: scrollOffset, animated: true });
+        this.scrollView as unknown as number,
+        (x, y, width) => {
+          const scrollOffset = x + width / 2 - constants.deviceWidth / 2;
+          this.scrollView?.scrollTo({ x: Math.max(scrollOffset, 0), animated: true });
         },
         () => {}
       );
