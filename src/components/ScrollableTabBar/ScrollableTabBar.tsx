@@ -42,7 +42,7 @@ class ScrollableTabBar extends React.PureComponent<ScrollableTabBarProps> {
     if (this.tabRefs[page] && this.scrollView) {
       this.tabRefs[page]?.measureLayout(
         this.scrollView as unknown as number,
-        (x, y, width) => {
+        (x, _, width) => {
           const scrollOffset = x + width / 2 - constants.deviceWidth / 2;
           this.scrollView?.scrollTo({ x: Math.max(scrollOffset, 0), animated: true });
         },
